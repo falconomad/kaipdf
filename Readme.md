@@ -118,6 +118,16 @@ xcrun stapler staple dist/KaiPDF.dmg
 spctl -a -t open --context context:primary-signature -v dist/KaiPDF.dmg
 ```
 
+Or run in one step:
+
+```bash
+export DEV_ID_APP_CERT="Developer ID Application: YOUR_NAME (TEAMID)"
+export APPLE_ID="you@example.com"
+export APPLE_TEAM_ID="TEAMID"
+export APPLE_APP_PASSWORD="APP_SPECIFIC_PASSWORD"
+./Scripts/sign_and_notarize.sh
+```
+
 ## Notes
 
 - PDF->Word quality depends on the PDF structure and LibreOffice import support.
