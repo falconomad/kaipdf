@@ -8,20 +8,14 @@ KaiPDF is a local-first macOS desktop app built with Swift + SwiftUI.
 
 ## Features
 
-### V1 (native PDF tools via PDFKit)
+- Single modern interface (no V1/V2/V3 tabs)
 - Merge PDFs
 - Split PDF into single-page PDFs
-- Reorder pages (manual order input)
+- Reorder pages with drag-and-drop thumbnails
 - Compress PDF (Ghostscript, local binary)
-
-### V2 (offline conversion engine)
 - Word (`.doc`, `.docx`) -> PDF (LibreOffice headless)
 - PDF -> Word (`.docx`) (LibreOffice headless)
-
-### V3 (batch processing)
-- Queue jobs for merge/split/compress/convert
-- Run queue sequentially
-- Status tracking and logs
+- Optional advanced batch queue
 
 ## Requirements
 
@@ -77,6 +71,7 @@ Output:
 Output:
 
 - `dist/KaiPDF.dmg`
+- DMG opens with app + Applications shortcut layout for drag-to-install flow
 
 ## Auto push after each module
 
