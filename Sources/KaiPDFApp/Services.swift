@@ -123,14 +123,10 @@ final class ConversionService {
     }
 
     private func convertWithSoffice(inputURL: URL, outputDirectory: URL, targetFormat: String) throws {
-        let candidates = [
-            "/Applications/LibreOffice.app/Contents/MacOS/soffice",
-            "/opt/homebrew/bin/soffice",
-            "/usr/local/bin/soffice"
-        ]
-
-        guard let soffice = candidates.first(where: { fm.fileExists(atPath: $0) }) else {
-            throw AppError.runtime("LibreOffice not found. Install LibreOffice to enable offline Word/PDF conversion.")
+        guard let soffice = firstExistingPath(candidates: sofficeCandidates()) else {
+            throw AppError.runtime(
+                "Conversion engine is missing from this app build. The distributor must bundle LibreOffice in app resources."
+            )
         }
 
         _ = try Shell.run(soffice, args: [
@@ -139,6 +135,41 @@ final class ConversionService {
             "--outdir", outputDirectory.path,
             inputURL.path
         ])
+    }
+
+    private func sofficeCandidates() -> [String] {
+        var candidates: [String] = []
+
+        if let execPath = Bundle.main.executablePath {
+            let appRoot = URL(fileURLWithPath: execPath)
+                .deletingLastPathComponent() // MacOS
+                .deletingLastPathComponent() // Contents
+            let resources = appRoot.appendingPathComponent("Resources")
+            candidates.append(
+                resources.appendingPathComponent("Tools/LibreOffice.app/Contents/MacOS/soffice").path
+            )
+        }
+
+        if let resourceURL = Bundle.main.resourceURL {
+            candidates.append(
+                resourceURL.appendingPathComponent("Tools/LibreOffice.app/Contents/MacOS/soffice").path
+            )
+        }
+
+        candidates.append(contentsOf: [
+            // Dev fallback
+            FileManager.default.currentDirectoryPath + "/Resources/Tools/LibreOffice.app/Contents/MacOS/soffice",
+            // Legacy/system fallbacks (not required for end users)
+            "/Applications/LibreOffice.app/Contents/MacOS/soffice",
+            "/opt/homebrew/bin/soffice",
+            "/usr/local/bin/soffice"
+        ])
+
+        return candidates
+    }
+
+    private func firstExistingPath(candidates: [String]) -> String? {
+        candidates.first(where: { fm.fileExists(atPath: $0) })
     }
 }
 

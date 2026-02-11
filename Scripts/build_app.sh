@@ -7,6 +7,7 @@ DIST_DIR="$ROOT_DIR/dist"
 APP_NAME="KaiPDF"
 APP_BUNDLE="$DIST_DIR/$APP_NAME.app"
 ICON_PATH="$ROOT_DIR/Resources/Branding/AppIcon.icns"
+TOOLS_PATH="$ROOT_DIR/Resources/Tools"
 
 mkdir -p "$DIST_DIR"
 
@@ -52,6 +53,10 @@ chmod +x "$APP_BUNDLE/Contents/MacOS/KaiPDF"
 
 if [[ -f "$ICON_PATH" ]]; then
   cp "$ICON_PATH" "$APP_BUNDLE/Contents/Resources/AppIcon.icns"
+fi
+
+if [[ -d "$TOOLS_PATH" ]]; then
+  cp -R "$TOOLS_PATH" "$APP_BUNDLE/Contents/Resources/"
 fi
 
 echo "Built app bundle: $APP_BUNDLE"

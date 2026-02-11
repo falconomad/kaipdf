@@ -21,15 +21,21 @@ KaiPDF is a local-first macOS desktop app built with Swift + SwiftUI.
 
 - macOS 13+
 - Swift 6 toolchain
-- Optional for conversions: LibreOffice
 - Optional for compression: Ghostscript
 
 Install optional tools:
 
 ```bash
-brew install --cask libreoffice
 brew install ghostscript
 ```
+
+For distributor builds (end users should not install LibreOffice), bundle the conversion engine into the app resources:
+
+```bash
+./Scripts/bundle_libreoffice.sh
+```
+
+For local development only, system LibreOffice is still accepted as a fallback if present.
 
 ## Run in development
 
@@ -42,6 +48,8 @@ swift run
 ```bash
 ./Scripts/build_app.sh
 ```
+
+`build_app.sh` automatically embeds `Resources/Tools` into the app bundle.
 
 Output:
 
