@@ -78,6 +78,20 @@ Output:
 
 - `dist/KaiPDF.dmg`
 
+## Auto push after each module
+
+Install git post-commit hook (pushes current branch after every commit):
+
+```bash
+./Scripts/install_auto_push_hook.sh
+```
+
+Commit a completed module and push in one command:
+
+```bash
+./Scripts/commit_module.sh "feat(module): your message"
+```
+
 ## Production signing and notarization (for distribution)
 
 Unsigned DMGs can trigger Gatekeeper warnings. For public distribution, sign + notarize.
