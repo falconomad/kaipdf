@@ -93,28 +93,39 @@ struct ContentView: View {
 
     private var header: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("KaiPDF")
+            HStack(spacing: 5) {
+                logoView
+                Text("kaipdf")
                     .font(.system(size: 28, weight: .semibold, design: .rounded))
-                Text("Offline PDF and Word tools for macOS")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.white)
             }
             Spacer()
             Text("No Cloud")
                 .padding(.horizontal, 10)
                 .padding(.vertical, 5)
-                .background(Color.green.opacity(0.2))
+                .background(Color.white.opacity(0.14))
+                .foregroundStyle(.white)
                 .clipShape(Capsule())
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 14)
-        .background(
-            LinearGradient(
-                colors: [Color.blue.opacity(0.10), Color.cyan.opacity(0.06)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        )
+        .background(Color(red: 15 / 255, green: 23 / 255, blue: 42 / 255))
+    }
+
+    private var logoView: some View {
+        Group {
+            if let url = Bundle.module.url(forResource: "KaiPDFLogo", withExtension: "png", subdirectory: "Branding"),
+               let nsImage = NSImage(contentsOf: url) {
+                Image(nsImage: nsImage)
+                    .resizable()
+                    .scaledToFit()
+            } else {
+                RoundedRectangle(cornerRadius: 6)
+                    .fill(Color.white.opacity(0.9))
+            }
+        }
+        .frame(width: 28, height: 28)
+        .clipShape(RoundedRectangle(cornerRadius: 7))
     }
 
     private func actionCard(

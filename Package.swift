@@ -11,7 +11,10 @@ let package = Package(
     ],
     targets: [
         .executableTarget(
-            name: "KaiPDFApp"
+            name: "KaiPDFApp",
+            resources: [
+                .process("Resources")
+            ]
         )
     ]
 )
